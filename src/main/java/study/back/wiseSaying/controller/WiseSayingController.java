@@ -1,5 +1,7 @@
 package study.back.wiseSaying.controller;
 
+import study.back.global.AppContext;
+import study.back.global.Rq;
 import study.back.wiseSaying.entity.WiseSaying;
 import study.back.wiseSaying.service.WiseSayingService;
 
@@ -11,9 +13,9 @@ public class WiseSayingController {
     private Scanner sc;
     private WiseSayingService wiseSayingService;
 
-    public WiseSayingController(Scanner sc) {
-        this.sc = sc;
-        this.wiseSayingService = new WiseSayingService();
+    public WiseSayingController() {
+        this.sc = AppContext.sc;
+        this.wiseSayingService = AppContext.wiseSayingService;
     }
 
     public void actionAdd() {
@@ -37,5 +39,37 @@ public class WiseSayingController {
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
 
+    }
+
+    public void actionDelete(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+        boolean deleted = wiseSayingService.delete(id);
+
+        if (!deleted) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+
+        System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
+
+    }
+
+    public void actionModify(Rq rq) {
+
+        int id = rq.getParamAsInt("id", -1);
+
+        WiseSaying wiseSaying = wiseSayingService.findByIdOrNull(id);
+
+        if (wiseSaying == null) {
+            System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
+            return;
+        }
+        System.out.println("명언(기존) : %s".formatted(wiseSaying.getSaying()));
+        String newSaying = sc.nextLine();
+        System.out.println("작가(기존) : %s".formatted(wiseSaying.getAuthor()));
+        String newAuthor = sc.nextLine();
+
+        wiseSayingService.modify(wiseSaying, newSaying, newAuthor);
     }
 }

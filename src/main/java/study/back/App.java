@@ -1,5 +1,7 @@
 package study.back;
 
+import study.back.global.AppContext;
+import study.back.global.Rq;
 import study.back.system.controller.SystemController;
 import study.back.wiseSaying.controller.WiseSayingController;
 
@@ -11,23 +13,27 @@ public class App {
     private WiseSayingController wiseSayingController;
     private SystemController systemController;
 
-    public App(Scanner sc) {
-        this.sc = sc;
+    public App() {
+        this.sc = AppContext.sc;
+        wiseSayingController= AppContext.wiseSayingController;
+        systemController = AppContext.systemController;
     }
 
     public void run() {
-
-        wiseSayingController = new WiseSayingController(sc); // 테스트에서 주입되는 sc을 사용하기 위해서
-        systemController = new SystemController();
 
         System.out.println("== 명언 앱 ==");
         while (true) {
             System.out.println("명령) ");
             String cmd = sc.nextLine();
 
-            switch (cmd) {
+            Rq rq = new Rq(cmd);
+            String action = rq.getActionName();
+
+            switch (action) {
                 case "등록" -> wiseSayingController.actionAdd();
                 case "목록" -> wiseSayingController.actionList();
+                case "삭제" -> wiseSayingController.actionDelete(rq);
+                case "수정" -> wiseSayingController.actionModify(rq);
                 case "종료" -> {
                     systemController.actionExit();
                     return;
