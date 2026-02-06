@@ -1,3 +1,5 @@
+package testutil;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class TestUtilTest {
 
     @Test
-    @DisplayName("TestUtil.genSacnner()")
+    @DisplayName("testutil.TestUtil.genSacnner()")
     void t1() {
         Scanner scanner = TestUtil.genScanner("""
                 등록
@@ -27,7 +29,7 @@ public class TestUtilTest {
     }
 
     @Test
-    @DisplayName("TestUtil.setOutByArray()")
+    @DisplayName("testutil.TestUtil.setOutByArray()")
     void t2() throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = TestUtil.setOutByArray();
 
@@ -44,7 +46,7 @@ public class TestUtilTest {
 //    @Test
 //    @DisplayName("등록")
 //    void t1() {
-//        final String out = TestUtil.run("""
+//        final String out = testutil.TestUtil.run("""
 //                등록
 //                현재를 사랑하라.
 //                작자미상

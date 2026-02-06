@@ -1,3 +1,7 @@
+package study.back.wiseSaying.controller;
+
+import study.back.wiseSaying.entity.WiseSaying;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
