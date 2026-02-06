@@ -15,7 +15,6 @@ public class WiseSayingRepository {
             wiseSaying.setId(++lastId);
             wiseSayings.add(wiseSaying);
         }
-
         return wiseSaying;
     }
 
