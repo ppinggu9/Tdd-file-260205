@@ -41,7 +41,7 @@ public class Rq {
 
         String value = getParam(key, "");
 
-        if(value.isBlank()) {
+        if (value.isBlank()) {
             return defaultValue;
         }
 

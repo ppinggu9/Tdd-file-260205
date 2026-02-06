@@ -38,7 +38,6 @@ public class WiseSayingController {
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
-
     }
 
     public void actionDelete(Rq rq) {
@@ -52,7 +51,6 @@ public class WiseSayingController {
         }
 
         System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
-
     }
 
     public void actionModify(Rq rq) {
@@ -65,6 +63,7 @@ public class WiseSayingController {
             System.out.println("%d번 명언은 존재하지 않습니다.".formatted(id));
             return;
         }
+
         System.out.println("명언(기존) : %s".formatted(wiseSaying.getSaying()));
         String newSaying = sc.nextLine();
         System.out.println("작가(기존) : %s".formatted(wiseSaying.getAuthor()));
