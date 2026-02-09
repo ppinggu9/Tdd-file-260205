@@ -1,5 +1,6 @@
 package study.back.wiseSaying.repository;
 
+import study.back.wiseSaying.dto.PageDto;
 import study.back.wiseSaying.entity.WiseSaying;
 
 import java.util.ArrayList;
@@ -32,29 +33,39 @@ public class WiseSayingRepository {
                 .orElse(null);
     }
 
-    public List<WiseSaying> findListDesc(int page, int pageSize) {
-        return wiseSayings.reversed()
+    public PageDto findListDesc(int page, int pageSize) {
+        return pageOf(wiseSayings, page, pageSize);
+    }
+
+    public PageDto findByContentKeywordOrderByDesc(String kw, int page, int pageSize) {
+
+        List<WiseSaying> filteredContent = wiseSayings.reversed()
                 .stream()
-                .skip((long)(page - 1) * pageSize)
-                .limit(pageSize)//처음부터 5개
-                .toList();
-    }
-
-    public List<WiseSaying> findByContentKeywordOrderByDesc(String kw, int page, int pageSize) {
-        return wiseSayings.reversed().
-                stream()
                 .filter(w -> w.getSaying().contains(kw))
-                .skip((long)(page - 1) * pageSize)
-                .limit(pageSize)
                 .toList();
+
+        return pageOf(filteredContent, page, pageSize);
     }
 
-    public List<WiseSaying> findByAuthorKeywordOrderByDesc(String kw, int page, int pageSize) {
-        return wiseSayings.reversed()
+    public PageDto findByAuthorKeywordOrderByDesc(String kw, int page, int pageSize) {
+
+        List<WiseSaying> filteredContent = wiseSayings.reversed()
                 .stream()
                 .filter(w -> w.getAuthor().contains(kw))
-                .skip((long)(page - 1) * pageSize)
+                .toList();
+
+        return pageOf(filteredContent, page, pageSize);
+    }
+
+    private PageDto pageOf(List<WiseSaying> filteredContent, int page, int pageSize) {
+        int totalCount = filteredContent.size();
+
+        List<WiseSaying> pagedFilteredContent = filteredContent.reversed()
+                .stream()
+                .skip((long) (page - 1) * pageSize)
                 .limit(pageSize)
                 .toList();
+
+        return new PageDto(page, pageSize, totalCount, pagedFilteredContent);
     }
 }

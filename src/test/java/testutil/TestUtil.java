@@ -26,7 +26,6 @@ public class TestUtil {
 
     public static ByteArrayOutputStream setOutByArray() {
 
-        ORIGINAL_OUT = System.out;
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(byteArrayOutputStream);
 
