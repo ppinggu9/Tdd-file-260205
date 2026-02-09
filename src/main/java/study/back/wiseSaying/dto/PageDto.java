@@ -13,11 +13,11 @@ public class PageDto {
     private  int totalCount;
     private List<WiseSaying> content;
 
-//    public PageDto(int page, int pageSize, int totalCount, List<WiseSaying> content){
-//        this.page = page;
-//        this.pageSize = pageSize;
-//        this.totalCount = totalCount;
-//        this.content = content;
-//    }
+    public int getPageCount(){
+        if(totalCount == 0){
+            return 0;
+        }
+        return  (int)Math.ceil((double)totalCount / pageSize);
+    }
 }
 
