@@ -15,7 +15,11 @@ public class AppTestRunner {
         ByteArrayOutputStream outputStream = TestUtil.setOutByArray();// 배열로
         AppContext.init(sc);
         new App().run(); // 실행
-
+        try{
+            TestUtil.clearSetOutToByteArray(outputStream); // 다시 모니터로 돌려라
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
         return outputStream.toString(); // 결과받기
 
     }

@@ -23,9 +23,6 @@ public class WiseSayingRepository {
         return wiseSayings.removeIf(wiseSaying -> wiseSaying.getId() == id);
     }
 
-    public List<WiseSaying> findListDesc() {
-        return wiseSayings.reversed();
-    }
 
     public WiseSaying findByIdOrNull(int id) {
 
@@ -35,17 +32,29 @@ public class WiseSayingRepository {
                 .orElse(null);
     }
 
-    public List<WiseSaying> findByContentKeywordOrderByDesc(String kw) {
-        return wiseSayings.stream()
-                .filter(w -> w.getSaying().contains(kw))
-                .toList()
-                .reversed();
+    public List<WiseSaying> findListDesc(int page, int pageSize) {
+        return wiseSayings.reversed()
+                .stream()
+                .skip((long)(page - 1) * pageSize)
+                .limit(pageSize)//처음부터 5개
+                .toList();
     }
 
-    public List<WiseSaying> findByAuthorKeywordOrderByDesc(String kw) {
-        return wiseSayings.stream()
+    public List<WiseSaying> findByContentKeywordOrderByDesc(String kw, int page, int pageSize) {
+        return wiseSayings.reversed().
+                stream()
+                .filter(w -> w.getSaying().contains(kw))
+                .skip((long)(page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
+    }
+
+    public List<WiseSaying> findByAuthorKeywordOrderByDesc(String kw, int page, int pageSize) {
+        return wiseSayings.reversed()
+                .stream()
                 .filter(w -> w.getAuthor().contains(kw))
-                .toList()
-                .reversed();
+                .skip((long)(page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
     }
 }

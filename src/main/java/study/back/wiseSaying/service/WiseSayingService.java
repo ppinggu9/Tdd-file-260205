@@ -33,14 +33,12 @@ public class WiseSayingService {
         wiseSayingRepository.save(wiseSaying);
     }
 
-    public List<WiseSaying> findListDesc(String kw, String  kwt) {
+    public List<WiseSaying> findListDesc(String kw, String  kwt, int page, int pageSize) {
         return  switch (kwt){
-            case "content" -> wiseSayingRepository.findByContentKeywordOrderByDesc(kw);
-            case "author" -> wiseSayingRepository.findByAuthorKeywordOrderByDesc(kw);
-            default -> wiseSayingRepository.findListDesc(); // or throw으로 예외처리
+            case "content" -> wiseSayingRepository.findByContentKeywordOrderByDesc(kw,page, pageSize);
+            case "author" -> wiseSayingRepository.findByAuthorKeywordOrderByDesc(kw, page, pageSize);
+            default -> wiseSayingRepository.findListDesc(page,pageSize); // or throw으로 예외처리
         };
-//        return wiseSayingRepository.findListDesc();
-//        return wiseSayingRepository.findByKeywordOrderByDesc(kw);
     }
 
     public WiseSaying findByIdOrNull(int id) { // findByIdOrNull은 이름으로 Null이 나올 수 있다는것
