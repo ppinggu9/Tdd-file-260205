@@ -16,4 +16,7 @@ public class WiseSaying {
         this.saying = saying;
         this.author = author;
     }
+    public boolean isNew() {
+        return id == 0;
+    }
 }
