@@ -59,6 +59,14 @@ public class Util {
             }
         }
 
+        public static int getAsInt(String filePath, int defaultValue) {
+            try {
+                return Integer.parseInt(Files.readString(getPath(filePath)));
+            } catch (IOException e) {
+                return defaultValue;
+            }
+        }
+
         public static boolean rmdir(String dirPath) {
             return delete(dirPath);
         }
@@ -97,7 +105,6 @@ public class Util {
     }
 
     public static class json {
-
         public static String toString(Map<String, Object> map) {
             StringBuilder sb = new StringBuilder();
 
@@ -124,41 +131,41 @@ public class Util {
 
             return sb.toString();
         }
-    }
 
-    public static Map<String, Object> toMap(String jsonStr) {
-        Map<String, Object> map = new LinkedHashMap<>();
+        public static Map<String, Object> toMap(String jsonStr) {
+            Map<String, Object> map = new LinkedHashMap<>();
 
-        jsonStr = jsonStr.substring(1, jsonStr.length() - 1);
+            jsonStr = jsonStr.substring(1, jsonStr.length() - 1);
 
-        String[] jsonStrBits = jsonStr.split(",\n    \"");
+            String[] jsonStrBits = jsonStr.split(",\n    \"");
 
-        for (String jsonStrBit : jsonStrBits) {
-            jsonStrBit = jsonStrBit.trim();
+            for (String jsonStrBit : jsonStrBits) {
+                jsonStrBit = jsonStrBit.trim();
 
-            if (jsonStrBit.endsWith(",")) jsonStrBit = jsonStrBit.substring(0, jsonStrBit.length() - 1);
+                if (jsonStrBit.endsWith(",")) jsonStrBit = jsonStrBit.substring(0, jsonStrBit.length() - 1);
 
-            String[] jsonField = jsonStrBit.split("\": ");
+                String[] jsonField = jsonStrBit.split("\": ");
 
-            String key = jsonField[0];
-            if (key.startsWith("\"")) key = key.substring(1);
+                String key = jsonField[0];
+                if (key.startsWith("\"")) key = key.substring(1);
 
-            boolean valueIsString = jsonField[1].startsWith("\"") && jsonField[1].endsWith("\"");
-            String value = jsonField[1];
+                boolean valueIsString = jsonField[1].startsWith("\"") && jsonField[1].endsWith("\"");
+                String value = jsonField[1];
 
-            if (valueIsString) value = value.substring(1, value.length() - 1);
+                if (valueIsString) value = value.substring(1, value.length() - 1);
 
-            if (valueIsString) {
-                map.put(key, value);
-            } else if (value.equals("true") || value.equals("false")) {
-                map.put(key, value.equals("true"));
-            } else if (value.contains(".")) {
-                map.put(key, Double.parseDouble(value));
-            } else {
-                map.put(key, Integer.parseInt(value));
+                if (valueIsString) {
+                    map.put(key, value);
+                } else if (value.equals("true") || value.equals("false")) {
+                    map.put(key, value.equals("true"));
+                } else if (value.contains(".")) {
+                    map.put(key, Double.parseDouble(value));
+                } else {
+                    map.put(key, Integer.parseInt(value));
+                }
             }
-        }
 
-        return map;
+            return map;
+        }
     }
 }

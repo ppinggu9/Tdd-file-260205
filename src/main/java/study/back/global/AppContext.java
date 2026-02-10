@@ -2,6 +2,7 @@ package study.back.global;
 
 import study.back.system.controller.SystemController;
 import study.back.wiseSaying.controller.WiseSayingController;
+import study.back.wiseSaying.repository.WiseSayingFileRepository;
 import study.back.wiseSaying.repository.WiseSayingRepository;
 import study.back.wiseSaying.service.WiseSayingService;
 
@@ -14,6 +15,7 @@ public class AppContext {
     public static WiseSayingController wiseSayingController;
     public static WiseSayingService wiseSayingService;
     public static WiseSayingRepository wiseSayingRepository;
+    public static WiseSayingFileRepository wiseSayingFileRepository;
 
     public static void init(Scanner _sc) {
         AppContext.sc = _sc;
@@ -21,6 +23,7 @@ public class AppContext {
         AppContext.wiseSayingService = new WiseSayingService();
         AppContext.wiseSayingController = new WiseSayingController();
         AppContext.systemController = new SystemController();
+        AppContext.wiseSayingFileRepository = new WiseSayingFileRepository();
     }
 
     public static void init() {
