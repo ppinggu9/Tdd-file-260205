@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class WiseSayingFileRepository {
+public class WiseSayingFileRepository implements  WiseSayingRepository{
 
     public WiseSaying save(WiseSaying wiseSaying) {
         //메모리에서는 set으로도 이미 업데이트 된거나 마찬가지이지만 file이라서 저장해야함
@@ -54,12 +54,21 @@ public class WiseSayingFileRepository {
         Util.file.delete(getDbPath());
     }
 
-    public String getDbPath() {
+    private String getDbPath() {
         return "db/wiseSaying/";
     }
 
-    public void delete(WiseSaying wiseSaying1) {
+    public boolean delete(WiseSaying wiseSaying1) {
+        return
         Util.file.delete("%s/%d.json".formatted(getDbPath(), wiseSaying1.getId()));
+    }
+    public PageDto findAll(int page, int pageSize) {
+        List<WiseSaying> filteredContent = findAll().stream()
+                .skip((page - 1) * pageSize)
+                .limit(pageSize)
+                .toList();
+        int totalCount = findAll().size();
+        return new PageDto(page, pageSize, totalCount, filteredContent);
     }
 
     public List<WiseSaying> findAll() {
@@ -70,6 +79,7 @@ public class WiseSayingFileRepository {
                 .toList();
 
     }
+
 
     private PageDto pageOf(List<WiseSaying> filteredContent, int page, int pageSize) {
         int totalCount = filteredContent.size();
