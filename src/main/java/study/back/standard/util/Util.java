@@ -5,6 +5,7 @@ import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Util {
     // 이너 클래스
@@ -100,6 +101,16 @@ public class Util {
                 return true;
             } catch (IOException e) {
                 return false;
+            }
+        }
+
+        public static Stream<Path> walkRegularFiles(String dirPath, String fileNameRegex) {
+            try {
+                return Files.walk(Path.of(dirPath)) //walk가 stream으로 처리되는데 파일을 stream으로 바꿔준다
+                        .filter(Files::isRegularFile) // 필터
+                        .filter(path -> path.getFileName().toString().matches(fileNameRegex));// 일치하냐
+            } catch (IOException e) {
+                return Stream.empty();
             }
         }
     }

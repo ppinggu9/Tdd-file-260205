@@ -1,9 +1,6 @@
 package study.back.wiseSaying.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -13,11 +10,13 @@ import java.util.Optional;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class WiseSaying {
 
     private int id;
     private String saying;
     private String author;
+
 
     public WiseSaying(String saying, String author) {
         this.saying = saying;

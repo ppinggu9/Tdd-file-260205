@@ -15,7 +15,7 @@ public class WiseSayingController {
     private Scanner sc;
     private WiseSayingService wiseSayingService;
 
-    public WiseSayingController() {
+    public WiseSayingController(Scanner sc) {
         this.sc = AppContext.sc;
         this.wiseSayingService = AppContext.wiseSayingService;
     }
@@ -54,21 +54,13 @@ public class WiseSayingController {
                 .stream()
                 .forEach(wiseSaying -> System.out.printf("%d / %s / %s%n",
                         wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getSaying()));
-
         System.out.print("페이지 : ");
-       String pageMenuStr = IntStream
+        String pageMenuStr = IntStream
                 .rangeClosed(1, pageDto.getPageCount())
                 .mapToObj((num) -> num == page ? "[" + num + "]" : String.valueOf(num))
                 .collect(Collectors.joining(" / "));
-//                .forEach((num) -> {
-//                    if(num == page){
-//                        System.out.print("[" + num + "]");
-//                    }else {
-//                        System.out.print(num);
-//                    }
-//
-//                    System.out.print(" / ");
-//                });
+
+        System.out.println(pageMenuStr);
     }
 
     public void actionDelete(Rq rq) {
