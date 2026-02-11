@@ -1,5 +1,6 @@
 package study.back.wiseSaying.repository;
 
+import study.back.global.AppConfig;
 import study.back.standard.util.Util;
 import study.back.wiseSaying.dto.PageDto;
 import study.back.wiseSaying.entity.WiseSaying;
@@ -20,7 +21,7 @@ public class WiseSayingFileRepository implements  WiseSayingRepository{
             wiseSaying.setId(lastId);
             Map<String, Object> wiseSayingMap = wiseSaying.toMap();
             String jsonStr = Util.json.toString(wiseSayingMap);
-            Util.file.set("db/wiseSaying/%d.json".formatted(wiseSaying.getId()), jsonStr);
+            Util.file.set("%s/%d.json".formatted(getDbPath(),wiseSaying.getId()), jsonStr);
 
             return wiseSaying;
         }
@@ -55,7 +56,7 @@ public class WiseSayingFileRepository implements  WiseSayingRepository{
     }
 
     private String getDbPath() {
-        return "db/wiseSaying/";
+        return AppConfig.getMode() +  "/db/wiseSaying/";
     }
 
     public boolean delete(WiseSaying wiseSaying1) {

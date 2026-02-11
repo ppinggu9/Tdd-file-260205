@@ -1,6 +1,7 @@
 package app;
 
 import study.back.App;
+import study.back.global.AppConfig;
 import study.back.global.AppContext;
 import testutil.TestUtil;
 
@@ -14,7 +15,9 @@ public class AppTestRunner {
 
         ByteArrayOutputStream outputStream = TestUtil.setOutByArray();// 배열로
 
-        AppContext.init(sc);
+
+        AppConfig.setTestMode();
+        AppContext.init(sc,false);
         new App().run(); // 실행
         try{
             TestUtil.clearSetOutToByteArray(outputStream); // 다시 모니터로 돌려라

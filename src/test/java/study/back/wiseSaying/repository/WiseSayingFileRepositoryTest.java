@@ -1,6 +1,7 @@
 package study.back.wiseSaying.repository;
 
 import org.junit.jupiter.api.*;
+import study.back.global.AppConfig;
 import study.back.global.AppContext;
 import study.back.wiseSaying.dto.PageDto;
 import study.back.wiseSaying.entity.WiseSaying;
@@ -14,6 +15,7 @@ public class WiseSayingFileRepositoryTest {
     private WiseSayingFileRepository wiseSayingFileRepository;
 
     public WiseSayingFileRepositoryTest() {
+        AppConfig.setTestMode();
         AppContext.init();
         wiseSayingFileRepository = AppContext.wiseSayingFileRepository;
     }
